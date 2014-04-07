@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.37"
+    ComputedModelVersion    "1.40"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "compiaffe"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Apr 07 12:18:58 2014"
+  LastModifiedDate	  "Mon Apr 07 14:42:31 2014"
   RTWModifiedTimeStamp	  318771742
-  ModelVersionFormat	  "1.%<AutoIncrement:37>"
+  ModelVersionFormat	  "1.%<AutoIncrement:40>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -1180,7 +1180,7 @@ Model {
       ZOrder		      -16
       Floating		      off
       Location		      [6, 71, 1274, 799]
-      Open		      off
+      Open		      on
       NumInputPorts	      "2"
       TickLabels	      "on"
       ZoomMode		      "xonly"
@@ -1200,10 +1200,12 @@ Model {
 	MarkerStyles		"none|none|none|none|none|none"
       }
       ShowLegends	      on
-      YMin		      "-0.5~0.95"
-      YMax		      "5.5~1.05"
+      LegendLocations	      "0.91835     0.93474    0.059174     0.02473\n0.91835     0.44848    0.059174     0.02473"
+      YMin		      "-25000~-30"
+      YMax		      "20000~30"
       SaveName		      "ScopeData3"
       DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
       MaxDataPoints	      "500000"
       SampleTime	      "1"
     }
@@ -1221,7 +1223,7 @@ Model {
       SID		      "97"
       Position		      [350, 422, 425, 488]
       ZOrder		      -8
-      Gain		      "12.32"
+      Gain		      "52.483"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1232,7 +1234,7 @@ Model {
       SID		      "65"
       Position		      [345, 312, 420, 348]
       ZOrder		      -8
-      Gain		      "1.212E4"
+      Gain		      "51631.2"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1243,7 +1245,7 @@ Model {
       SID		      "63"
       Position		      [215, 393, 285, 447]
       ZOrder		      -8
-      Gain		      "-1094"
+      Gain		      "-4660.439"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1257,9 +1259,10 @@ Model {
       ZOrder		      -16
       Floating		      off
       Location		      [6, 71, 1274, 799]
-      Open		      off
+      Open		      on
       NumInputPorts	      "2"
       TickLabels	      "on"
+      ZoomMode		      "yonly"
       List {
 	ListType		AxesTitles
 	axes1			"%<SignalLabel>"
@@ -1277,9 +1280,10 @@ Model {
       }
       ShowLegends	      on
       LegendLocations	      "0.91835     0.93612    0.059174     0.02473\n0.92466     0.44848     0.11359     0.02473"
-      YMin		      "-0.5~0.95"
+      YMin		      "-1~0.95"
       YMax		      "5.5~1.05"
       DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
       MaxDataPoints	      "500000"
       SampleTime	      "1"
     }

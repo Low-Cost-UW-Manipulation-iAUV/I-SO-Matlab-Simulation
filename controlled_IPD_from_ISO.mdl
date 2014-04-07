@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.44"
+    ComputedModelVersion    "1.45"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "compiaffe"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Apr 07 15:31:07 2014"
+  LastModifiedDate	  "Mon Apr 07 15:52:30 2014"
   RTWModifiedTimeStamp	  318771742
-  ModelVersionFormat	  "1.%<AutoIncrement:44>"
+  ModelVersionFormat	  "1.%<AutoIncrement:45>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -1226,10 +1226,9 @@ Model {
       ZOrder		      -16
       Floating		      off
       Location		      [0, 85, 1268, 813]
-      Open		      on
+      Open		      off
       NumInputPorts	      "2"
       TickLabels	      "on"
-      ZoomMode		      "yonly"
       List {
 	ListType		AxesTitles
 	axes1			"%<SignalLabel>"
@@ -1247,8 +1246,8 @@ Model {
       }
       ShowLegends	      on
       LegendLocations	      "0.91835     0.93474    0.059174     0.02473\n0.91835     0.44848    0.059174     0.02473"
-      YMin		      "-2~-2"
-      YMax		      "5~5"
+      YMin		      "-25~-25"
+      YMax		      "20~20"
       SaveName		      "ScopeData3"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
@@ -1305,7 +1304,7 @@ Model {
       ZOrder		      -16
       Floating		      off
       Location		      [6, 78, 1274, 806]
-      Open		      on
+      Open		      off
       NumInputPorts	      "2"
       TickLabels	      "on"
       List {
@@ -1326,7 +1325,7 @@ Model {
       ShowLegends	      on
       LegendLocations	      "0.91835     0.93612    0.059174     0.02473\n0.92466     0.44848     0.11359     0.02473"
       YMin		      "0~0"
-      YMax		      "1.3~5"
+      YMax		      "6~5"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
       MaxDataPoints	      "500000"

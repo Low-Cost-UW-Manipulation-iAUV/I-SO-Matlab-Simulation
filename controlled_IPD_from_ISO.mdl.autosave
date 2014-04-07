@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.34"
+    ComputedModelVersion    "1.40"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "compiaffe"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Apr 07 11:51:33 2014"
+  LastModifiedDate	  "Mon Apr 07 14:42:31 2014"
   RTWModifiedTimeStamp	  318771742
-  ModelVersionFormat	  "1.%<AutoIncrement:34>"
+  ModelVersionFormat	  "1.%<AutoIncrement:40>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -667,6 +667,15 @@ Model {
       SaturateOnIntegerOverflow	on
     }
     Block {
+      BlockType		      DeadZone
+      LowerValue	      "-0.5"
+      UpperValue	      "0.5"
+      SaturateOnIntegerOverflow	on
+      LinearizeAsGain	      on
+      ZeroCross		      on
+      SampleTime	      "-1"
+    }
+    Block {
       BlockType		      Derivative
       CoefficientInTFapproximation "inf"
     }
@@ -849,13 +858,13 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "126"
+    SIDHighWatermark	    "127"
     Block {
       BlockType		      SubSystem
       Name		      "AUV"
       SID		      "68"
       Ports		      [1, 5]
-      Position		      [535, 327, 635, 393]
+      Position		      [535, 313, 670, 397]
       ZOrder		      -19
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
@@ -866,7 +875,7 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"AUV"
-	Location		[0, 468, 1280, 1240]
+	Location		[0, 556, 1280, 1328]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1026,7 +1035,7 @@ Model {
 	}
 	Block {
 	  BlockType		  Outport
-	  Name			  "produced forces"
+	  Name			  "feasible forces"
 	  SID			  "124"
 	  Position		  [385, 78, 415, 92]
 	  ZOrder		  -2
@@ -1149,7 +1158,7 @@ Model {
 	  }
 	  Branch {
 	    Points		    [0, -125]
-	    DstBlock		    "produced forces"
+	    DstBlock		    "feasible forces"
 	    DstPort		    1
 	  }
 	}
@@ -1164,12 +1173,60 @@ Model {
       }
     }
     Block {
+      BlockType		      DeadZone
+      Name		      "Dead Zone"
+      SID		      "127"
+      Position		      [150, 375, 180, 405]
+      ZOrder		      -3
+      NamePlacement	      "alternate"
+      LowerValue	      "-0.005"
+      UpperValue	      "0.005"
+    }
+    Block {
       BlockType		      Derivative
       Name		      "Derivative"
       SID		      "96"
       Position		      [290, 480, 320, 510]
       ZOrder		      -1
       BlockRotation	      270
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Forces"
+      SID		      "126"
+      Ports		      [2]
+      Position		      [820, 416, 850, 449]
+      ZOrder		      -16
+      Floating		      off
+      Location		      [6, 71, 1274, 799]
+      Open		      on
+      NumInputPorts	      "2"
+      TickLabels	      "on"
+      ZoomMode		      "yonly"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+	axes2			"%<SignalLabel>"
+      }
+      List {
+	ListType		ScopeGraphics
+	FigureColor		"[0.501960784313725 0.501960784313725 0.501960784313725]"
+	AxesColor		"[0 0 0]"
+	AxesTickColor		"[1 1 1]"
+	LineColors		"[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+	LineStyles		"-|-|-|-|-|-"
+	LineWidths		"[0.5 0.5 0.5 0.5 0.5 0.5]"
+	MarkerStyles		"none|none|none|none|none|none"
+      }
+      ShowLegends	      on
+      LegendLocations	      "0.91835     0.93474    0.059174     0.02473\n0.91835     0.44848    0.059174     0.02473"
+      YMin		      "-25000~-30"
+      YMax		      "20000~30"
+      SaveName		      "ScopeData3"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      MaxDataPoints	      "500000"
+      SampleTime	      "1"
     }
     Block {
       BlockType		      Integrator
@@ -1185,7 +1242,7 @@ Model {
       SID		      "97"
       Position		      [350, 422, 425, 488]
       ZOrder		      -8
-      Gain		      "12.32"
+      Gain		      "52.483"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1196,7 +1253,7 @@ Model {
       SID		      "65"
       Position		      [345, 312, 420, 348]
       ZOrder		      -8
-      Gain		      "1.212E4"
+      Gain		      "51631.2"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1207,27 +1264,14 @@ Model {
       SID		      "63"
       Position		      [215, 393, 285, 447]
       ZOrder		      -8
-      Gain		      "-1094"
+      Gain		      "-4660.439"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
     }
     Block {
-      BlockType		      Reference
-      Name		      "Repeating\nSequence"
-      SID		      "120"
-      Ports		      [0, 1]
-      Position		      [35, 360, 65, 390]
-      ZOrder		      -16
-      LibraryVersion	      "1.260"
-      SourceBlock	      "simulink/Sources/Repeating\nSequence"
-      SourceType	      "Repeating table"
-      rep_seq_t		      "[0 1 1 2 2 3 3]"
-      rep_seq_y		      "[0 0 1 1 5 5 0]"
-    }
-    Block {
       BlockType		      Scope
-      Name		      "Scope"
+      Name		      "Position"
       SID		      "5"
       Ports		      [2]
       Position		      [980, 276, 1010, 309]
@@ -1237,7 +1281,6 @@ Model {
       Open		      on
       NumInputPorts	      "2"
       TickLabels	      "on"
-      ZoomMode		      "xonly"
       List {
 	ListType		AxesTitles
 	axes1			"%<SignalLabel>"
@@ -1255,11 +1298,25 @@ Model {
       }
       ShowLegends	      on
       LegendLocations	      "0.91835     0.93612    0.059174     0.02473\n0.92466     0.44848     0.11359     0.02473"
-      YMin		      "-0.5~0.95"
+      YMin		      "-1~0.95"
       YMax		      "5.5~1.05"
       DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
       MaxDataPoints	      "500000"
       SampleTime	      "1"
+    }
+    Block {
+      BlockType		      Reference
+      Name		      "Repeating\nSequence"
+      SID		      "120"
+      Ports		      [0, 1]
+      Position		      [35, 360, 65, 390]
+      ZOrder		      -16
+      LibraryVersion	      "1.260"
+      SourceBlock	      "simulink/Sources/Repeating\nSequence"
+      SourceType	      "Repeating table"
+      rep_seq_t		      "[0 1 1 2 2 3 3]"
+      rep_seq_y		      "[0 0 1 1 5 5 0]"
     }
     Block {
       BlockType		      Scope
@@ -1324,43 +1381,6 @@ Model {
       SaveName		      "ScopeData2"
       DataFormat	      "StructureWithTime"
       SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "Scope3"
-      SID		      "126"
-      Ports		      [2]
-      Position		      [820, 416, 850, 449]
-      ZOrder		      -16
-      Floating		      off
-      Location		      [6, 71, 1274, 799]
-      Open		      off
-      NumInputPorts	      "2"
-      TickLabels	      "on"
-      ZoomMode		      "xonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-	axes2			"%<SignalLabel>"
-      }
-      List {
-	ListType		ScopeGraphics
-	FigureColor		"[0.501960784313725 0.501960784313725 0.501960784313725]"
-	AxesColor		"[0 0 0]"
-	AxesTickColor		"[1 1 1]"
-	LineColors		"[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
-	LineStyles		"-|-|-|-|-|-"
-	LineWidths		"[0.5 0.5 0.5 0.5 0.5 0.5]"
-	MarkerStyles		"none|none|none|none|none|none"
-      }
-      ShowLegends	      on
-      LegendLocations	      "0.91835     0.93612    0.059174     0.02473\n0.92466     0.44848     0.11359     0.02473"
-      YMin		      "-0.5~0.95"
-      YMax		      "5.5~1.05"
-      SaveName		      "ScopeData3"
-      DataFormat	      "StructureWithTime"
-      MaxDataPoints	      "500000"
-      SampleTime	      "1"
     }
     Block {
       BlockType		      Scope
@@ -1444,7 +1464,7 @@ Model {
       }
       Branch {
 	Points			[0, -75]
-	DstBlock		"Scope"
+	DstBlock		"Position"
 	DstPort			2
       }
     }
@@ -1470,12 +1490,12 @@ Model {
     Line {
       SrcBlock		      "AUV"
       SrcPort		      1
-      Points		      [265, 0]
+      Points		      [0, 5; 230, 0]
       Branch {
 	Points			[25, 0]
 	Branch {
 	  Points		  [30, 0; 0, -45]
-	  DstBlock		  "Scope"
+	  DstBlock		  "Position"
 	  DstPort		  1
 	}
 	Branch {
@@ -1500,12 +1520,14 @@ Model {
     Line {
       SrcBlock		      "AUV"
       SrcPort		      2
+      Points		      [0, 5]
       DstBlock		      "Scope2"
       DstPort		      1
     }
     Line {
       SrcBlock		      "AUV"
       SrcPort		      3
+      Points		      [0, 5]
       DstBlock		      "Scope1"
       DstPort		      1
     }
@@ -1531,20 +1553,6 @@ Model {
       DstPort		      1
     }
     Line {
-      SrcBlock		      "Sum"
-      SrcPort		      1
-      Points		      [65, 0]
-      Branch {
-	Points			[5, 0; 0, -60]
-	DstBlock		"Integrator2"
-	DstPort			1
-      }
-      Branch {
-	DstBlock		"K_p"
-	DstPort			1
-      }
-    }
-    Line {
       SrcBlock		      "K_p"
       SrcPort		      1
       Points		      [0, -10; 120, 0; 0, -65]
@@ -1554,16 +1562,36 @@ Model {
     Line {
       SrcBlock		      "AUV"
       SrcPort		      4
-      Points		      [75, 0; 0, 50]
-      DstBlock		      "Scope3"
+      Points		      [40, 0; 0, 55]
+      DstBlock		      "Forces"
       DstPort		      1
     }
     Line {
       SrcBlock		      "AUV"
       SrcPort		      5
-      Points		      [65, 0; 0, 50]
-      DstBlock		      "Scope3"
+      Points		      [30, 0; 0, 55]
+      DstBlock		      "Forces"
       DstPort		      2
+    }
+    Line {
+      SrcBlock		      "Sum"
+      SrcPort		      1
+      DstBlock		      "Dead Zone"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Dead Zone"
+      SrcPort		      1
+      Points		      [15, 0]
+      Branch {
+	Points			[30, 0; 0, -60]
+	DstBlock		"Integrator2"
+	DstPort			1
+      }
+      Branch {
+	DstBlock		"K_p"
+	DstPort			1
+      }
     }
     Annotation {
       SID		      "39"

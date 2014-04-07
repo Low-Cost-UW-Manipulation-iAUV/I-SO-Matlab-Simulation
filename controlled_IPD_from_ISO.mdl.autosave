@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.40"
+    ComputedModelVersion    "1.42"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "compiaffe"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Apr 07 14:42:31 2014"
+  LastModifiedDate	  "Mon Apr 07 15:07:22 2014"
   RTWModifiedTimeStamp	  318771742
-  ModelVersionFormat	  "1.%<AutoIncrement:40>"
+  ModelVersionFormat	  "1.%<AutoIncrement:42>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -858,13 +858,13 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "127"
+    SIDHighWatermark	    "131"
     Block {
       BlockType		      SubSystem
       Name		      "AUV"
       SID		      "68"
-      Ports		      [1, 5]
-      Position		      [535, 313, 670, 397]
+      Ports		      [1, 6]
+      Position		      [535, 320, 670, 405]
       ZOrder		      -19
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
@@ -875,8 +875,8 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"AUV"
-	Location		[0, 556, 1280, 1328]
-	Open			off
+	Location		[-4, 257, 1276, 1029]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -907,6 +907,14 @@ Model {
 	  SaturateOnIntegerOverflow off
 	}
 	Block {
+	  BlockType		  Abs
+	  Name			  "Abs1"
+	  SID			  "130"
+	  Position		  [420, 150, 450, 180]
+	  ZOrder		  -1
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
 	  BlockType		  Integrator
 	  Name			  "Integrator"
 	  SID			  "73"
@@ -920,6 +928,14 @@ Model {
 	  SID			  "74"
 	  Ports			  [1, 1]
 	  Position		  [650, 195, 680, 225]
+	  ZOrder		  -2
+	}
+	Block {
+	  BlockType		  Integrator
+	  Name			  "Integrator2"
+	  SID			  "128"
+	  Ports			  [1, 1]
+	  Position		  [505, 30, 535, 60]
 	  ZOrder		  -2
 	}
 	Block {
@@ -1042,6 +1058,15 @@ Model {
 	  Port			  "5"
 	  IconDisplay		  "Port number"
 	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "work done"
+	  SID			  "129"
+	  Position		  [600, 38, 630, 52]
+	  ZOrder		  -2
+	  Port			  "6"
+	  IconDisplay		  "Port number"
+	}
 	Line {
 	  SrcBlock		  "k_drag1"
 	  SrcPort		  1
@@ -1153,14 +1178,35 @@ Model {
 	  SrcPort		  1
 	  Points		  [10, 0]
 	  Branch {
-	    DstBlock		    "k_inertia"
-	    DstPort		    1
-	  }
-	  Branch {
 	    Points		    [0, -125]
 	    DstBlock		    "feasible forces"
 	    DstPort		    1
 	  }
+	  Branch {
+	    Points		    [10, 0]
+	    Branch {
+	      DstBlock		      "k_inertia"
+	      DstPort		      1
+	    }
+	    Branch {
+	      Points		      [0, -45]
+	      DstBlock		      "Abs1"
+	      DstPort		      1
+	    }
+	  }
+	}
+	Line {
+	  SrcBlock		  "Integrator2"
+	  SrcPort		  1
+	  DstBlock		  "work done"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Abs1"
+	  SrcPort		  1
+	  Points		  [15, 0; 0, -120]
+	  DstBlock		  "Integrator2"
+	  DstPort		  1
 	}
 	Annotation {
 	  SID			  "90"
@@ -1179,7 +1225,7 @@ Model {
       Position		      [150, 375, 180, 405]
       ZOrder		      -3
       NamePlacement	      "alternate"
-      LowerValue	      "-0.005"
+      LowerValue	      "-0.05"
       UpperValue	      "0.005"
     }
     Block {
@@ -1220,8 +1266,8 @@ Model {
       }
       ShowLegends	      on
       LegendLocations	      "0.91835     0.93474    0.059174     0.02473\n0.91835     0.44848    0.059174     0.02473"
-      YMin		      "-25000~-30"
-      YMax		      "20000~30"
+      YMin		      "-4000~-30"
+      YMax		      "19000~30"
       SaveName		      "ScopeData3"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
@@ -1454,6 +1500,18 @@ Model {
       SampleTime	      "-1"
       SaveFormat	      "Timeseries"
     }
+    Block {
+      BlockType		      ToWorkspace
+      Name		      "Work done"
+      SID		      "131"
+      Ports		      [1]
+      Position		      [765, 470, 825, 500]
+      ZOrder		      -7
+      VariableName	      "work_done"
+      MaxDataPoints	      "inf"
+      SampleTime	      "-1"
+      SaveFormat	      "Timeseries"
+    }
     Line {
       SrcBlock		      "Repeating\nSequence"
       SrcPort		      1
@@ -1592,6 +1650,13 @@ Model {
 	DstBlock		"K_p"
 	DstPort			1
       }
+    }
+    Line {
+      SrcBlock		      "AUV"
+      SrcPort		      6
+      Points		      [20, 0; 0, 85]
+      DstBlock		      "Work done"
+      DstPort		      1
     }
     Annotation {
       SID		      "39"

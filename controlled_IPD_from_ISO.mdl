@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.42"
+    ComputedModelVersion    "1.44"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "compiaffe"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Apr 07 15:07:22 2014"
+  LastModifiedDate	  "Mon Apr 07 15:31:07 2014"
   RTWModifiedTimeStamp	  318771742
-  ModelVersionFormat	  "1.%<AutoIncrement:42>"
+  ModelVersionFormat	  "1.%<AutoIncrement:44>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -667,15 +667,6 @@ Model {
       SaturateOnIntegerOverflow	on
     }
     Block {
-      BlockType		      DeadZone
-      LowerValue	      "-0.5"
-      UpperValue	      "0.5"
-      SaturateOnIntegerOverflow	on
-      LinearizeAsGain	      on
-      ZeroCross		      on
-      SampleTime	      "-1"
-    }
-    Block {
       BlockType		      Derivative
       CoefficientInTFapproximation "inf"
     }
@@ -1219,16 +1210,6 @@ Model {
       }
     }
     Block {
-      BlockType		      DeadZone
-      Name		      "Dead Zone"
-      SID		      "127"
-      Position		      [150, 375, 180, 405]
-      ZOrder		      -3
-      NamePlacement	      "alternate"
-      LowerValue	      "-0.005"
-      UpperValue	      "0.005"
-    }
-    Block {
       BlockType		      Derivative
       Name		      "Derivative"
       SID		      "96"
@@ -1244,7 +1225,7 @@ Model {
       Position		      [820, 416, 850, 449]
       ZOrder		      -16
       Floating		      off
-      Location		      [6, 71, 1274, 799]
+      Location		      [0, 85, 1268, 813]
       Open		      on
       NumInputPorts	      "2"
       TickLabels	      "on"
@@ -1266,8 +1247,8 @@ Model {
       }
       ShowLegends	      on
       LegendLocations	      "0.91835     0.93474    0.059174     0.02473\n0.91835     0.44848    0.059174     0.02473"
-      YMin		      "-25000~-30"
-      YMax		      "20000~30"
+      YMin		      "-2~-2"
+      YMax		      "5~5"
       SaveName		      "ScopeData3"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
@@ -1288,7 +1269,7 @@ Model {
       SID		      "97"
       Position		      [350, 422, 425, 488]
       ZOrder		      -8
-      Gain		      "52.483"
+      Gain		      "0.052483"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1297,9 +1278,9 @@ Model {
       BlockType		      Gain
       Name		      "K_i"
       SID		      "65"
-      Position		      [345, 312, 420, 348]
+      Position		      [340, 312, 415, 348]
       ZOrder		      -8
-      Gain		      "51631.2"
+      Gain		      "51.6312"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1310,7 +1291,7 @@ Model {
       SID		      "63"
       Position		      [215, 393, 285, 447]
       ZOrder		      -8
-      Gain		      "-4660.439"
+      Gain		      "-4.660439"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1323,7 +1304,7 @@ Model {
       Position		      [980, 276, 1010, 309]
       ZOrder		      -16
       Floating		      off
-      Location		      [6, 71, 1274, 799]
+      Location		      [6, 78, 1274, 806]
       Open		      on
       NumInputPorts	      "2"
       TickLabels	      "on"
@@ -1344,8 +1325,8 @@ Model {
       }
       ShowLegends	      on
       LegendLocations	      "0.91835     0.93612    0.059174     0.02473\n0.92466     0.44848     0.11359     0.02473"
-      YMin		      "-1~0.95"
-      YMax		      "5.5~1.05"
+      YMin		      "0~0"
+      YMax		      "1.3~5"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
       MaxDataPoints	      "500000"
@@ -1507,7 +1488,7 @@ Model {
       Ports		      [1]
       Position		      [765, 470, 825, 500]
       ZOrder		      -7
-      VariableName	      "simout"
+      VariableName	      "work_done"
       MaxDataPoints	      "inf"
       SampleTime	      "-1"
       SaveFormat	      "Timeseries"
@@ -1634,13 +1615,7 @@ Model {
     Line {
       SrcBlock		      "Sum"
       SrcPort		      1
-      DstBlock		      "Dead Zone"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Dead Zone"
-      SrcPort		      1
-      Points		      [15, 0]
+      Points		      [65, 0]
       Branch {
 	Points			[30, 0; 0, -60]
 	DstBlock		"Integrator2"

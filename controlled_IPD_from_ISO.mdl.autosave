@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.54"
+    ComputedModelVersion    "1.55"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "compiaffe"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Apr 10 16:07:36 2014"
+  LastModifiedDate	  "Thu Apr 10 16:21:37 2014"
   RTWModifiedTimeStamp	  319043936
-  ModelVersionFormat	  "1.%<AutoIncrement:54>"
+  ModelVersionFormat	  "1.%<AutoIncrement:55>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -1293,7 +1293,7 @@ Model {
       ZOrder		      -16
       Floating		      off
       Location		      [7, 71, 1275, 799]
-      Open		      on
+      Open		      off
       NumInputPorts	      "2"
       TickLabels	      "on"
       ZoomMode		      "yonly"
@@ -1326,7 +1326,7 @@ Model {
       BlockType		      Derivative
       Name		      "Derivative"
       SID		      "96"
-      Position		      [200, 480, 230, 510]
+      Position		      [200, 495, 230, 525]
       ZOrder		      -1
       BlockRotation	      270
     }
@@ -1378,7 +1378,7 @@ Model {
       ZOrder		      -16
       Floating		      off
       Location		      [6, 71, 1274, 799]
-      Open		      on
+      Open		      off
       NumInputPorts	      "2"
       TickLabels	      "on"
       ZoomMode		      "yonly"
@@ -1421,7 +1421,7 @@ Model {
       SID		      "97"
       Position		      [290, 442, 365, 508]
       ZOrder		      -8
-      Gain		      "0.052483"
+      Gain		      "00.52483"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1432,7 +1432,7 @@ Model {
       SID		      "65"
       Position		      [295, 307, 370, 343]
       ZOrder		      -8
-      Gain		      "51.6312"
+      Gain		      "516.312"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1443,7 +1443,7 @@ Model {
       SID		      "63"
       Position		      [235, 363, 305, 417]
       ZOrder		      -8
-      Gain		      "-4.660439"
+      Gain		      "-46.60439"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1457,7 +1457,7 @@ Model {
       ZOrder		      -16
       Floating		      off
       Location		      [9, 71, 1277, 799]
-      Open		      on
+      Open		      off
       NumInputPorts	      "2"
       TickLabels	      "on"
       ZoomMode		      "yonly"
@@ -1478,8 +1478,8 @@ Model {
       }
       ShowLegends	      on
       LegendLocations	      "0.91835      0.9363    0.059174     0.02473\n0.92466     0.44866    0.056808     0.02473"
-      YMin		      "0.9975~-0.075"
-      YMax		      "1.0425~0.2"
+      YMin		      "-100~-5e+12"
+      YMax		      "90~8.5e+13"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
       MaxDataPoints	      "500000"
@@ -1561,7 +1561,7 @@ Model {
       Name		      "Sum1"
       SID		      "95"
       Ports		      [3, 1]
-      Position		      [400, 320, 420, 370]
+      Position		      [400, 335, 420, 385]
       ZOrder		      -18
       ShowName		      off
       Inputs		      "+--"
@@ -1574,7 +1574,7 @@ Model {
       Name		      "Sum2"
       SID		      "138"
       Ports		      [2, 1]
-      Position		      [545, 318, 565, 367]
+      Position		      [535, 323, 555, 372]
       ZOrder		      -18
       ShowName		      off
       InputSameDT	      off
@@ -1659,7 +1659,7 @@ Model {
     Line {
       SrcBlock		      "K_i"
       SrcPort		      1
-      Points		      [0, 5]
+      Points		      [0, 20]
       DstBlock		      "Sum1"
       DstPort		      1
     }
@@ -1681,13 +1681,13 @@ Model {
 	}
       }
       Branch {
-	Points			[0, 200; -380, 0]
+	Points			[0, 200; -260, 0]
 	Branch {
 	  DstBlock		  "Switch1"
 	  DstPort		  1
 	}
 	Branch {
-	  Points		  [-20, 0; 0, 210]
+	  Points		  [-140, 0; 0, 210]
 	  DstBlock		  "Feedback Signal"
 	  DstPort		  2
 	}
@@ -1717,7 +1717,7 @@ Model {
 	DstPort			1
       }
       Branch {
-	Points			[0, -10; -20, 0; 0, -85]
+	Points			[0, -10; -20, 0; 0, -70]
 	DstBlock		"Sum1"
 	DstPort			3
       }
@@ -1725,13 +1725,14 @@ Model {
     Line {
       SrcBlock		      "Derivative"
       SrcPort		      1
+      Points		      [0, -15]
       DstBlock		      "K_d"
       DstPort		      1
     }
     Line {
       SrcBlock		      "K_p"
       SrcPort		      1
-      Points		      [55, 0; 0, -45]
+      Points		      [55, 0; 0, -30]
       DstBlock		      "Sum1"
       DstPort		      2
     }
@@ -1759,14 +1760,13 @@ Model {
     Line {
       SrcBlock		      "Sum1"
       SrcPort		      1
-      Points		      [0, 10]
       DstBlock		      "Sum2"
       DstPort		      2
     }
     Line {
       SrcBlock		      "Sum2"
       SrcPort		      1
-      Points		      [0, 5]
+      Points		      [10, 0]
       Branch {
 	Points			[0, 25]
 	DstBlock		"AUV"
@@ -1788,8 +1788,9 @@ Model {
     Line {
       SrcBlock		      "Repeating\nSequence1"
       SrcPort		      1
-      Points		      [95, 0; 0, 60]
+      Points		      [80, 0; 0, 60]
       Branch {
+	Points			[0, 60]
 	DstBlock		"Sum2"
 	DstPort			1
       }

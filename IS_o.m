@@ -20,8 +20,8 @@ force_torque_limit_bottom = -1* force_torque_limit_top;
 alpha = 5.59E-4;
 
 %Drag coefficients
-beta_r= 16.77E-4;
-beta_rr= 0;
+beta_r= 0;
+beta_rr= 18.93E-6;
 
 
 %% Run the Simulink simulation - 1DOF

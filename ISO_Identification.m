@@ -39,14 +39,16 @@ omega = 2*pi*response.frequency(ampl_max);
 
 %Define the Nonlinear Element (relay with Hysterisis) as taken from "Distance Keeping for Underwater Vehicles...Nikola"
 P = ((4*C)/(pi*x_m)) * sqrt(1-((x_a/x_m)^2));
-Q = -((4*C)/(pi*x_m^2))*x_a;
+Q = -((4*C*x_a)/(pi*(x_m^2)));
 %G_N(x_m) = P(x_m)+(1i*Q(x_m));
 
 %% ModelCoefficients
 
 ident_alpha = P/(omega^2); %Inertia coefficient
-ident_beta_r = -((Q)/(x_m*(omega^2))); %Constant drag
-ident_beta_rr = -((3*pi)/(8))*((Q)/(x_m*(omega^2))); %Non-Linear Drag
+ident_beta_r = -((Q)/(omega)); %Constant drag
+ident_beta_rr = -((3*pi*Q)/(8*x_m*(omega^2))); %Non-Linear Drag
+
+
 
 end
 

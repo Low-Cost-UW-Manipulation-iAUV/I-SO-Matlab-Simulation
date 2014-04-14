@@ -1,12 +1,12 @@
 Model {
-  Name			  "controlled_IPD_from_ISO"
+  Name			  "IS_O"
   Version		  7.9
   MdlSubVersion		  0
   GraphicalInterface {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.34"
+    ComputedModelVersion    "1.21"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "compiaffe"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Apr 07 11:51:33 2014"
-  RTWModifiedTimeStamp	  318771742
-  ModelVersionFormat	  "1.%<AutoIncrement:34>"
+  LastModifiedDate	  "Sat Apr 12 18:04:27 2014"
+  RTWModifiedTimeStamp	  319226634
+  ModelVersionFormat	  "1.%<AutoIncrement:21>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -66,13 +66,12 @@ Model {
     $PropName		    "DataLoggingOverride"
     $ObjectID		    1
     $ClassName		    "Simulink.SimulationData.ModelLoggingInfo"
-    model_		    "controlled_IPD_from_ISO"
-    signals_		    []
+    model_		    "IS_O"
     overrideMode_	    [0.0]
     Array {
       Type		      "Cell"
       Dimension		      1
-      Cell		      "controlled_IPD_from_ISO"
+      Cell		      "IS_O"
       PropName		      "logAsSpecifiedByModels_"
     }
     Array {
@@ -132,8 +131,8 @@ Model {
 	Simulink.SolverCC {
 	  $ObjectID		  3
 	  Version		  "1.12.0"
-	  StartTime		  "0"
-	  StopTime		  "5"
+	  StartTime		  "0.0"
+	  StopTime		  "10"
 	  AbsTol		  "auto"
 	  FixedStep		  "0.001"
 	  InitialStep		  "auto"
@@ -144,8 +143,8 @@ Model {
 	  MaxConsecutiveZCs	  "1000"
 	  ExtrapolationOrder	  4
 	  NumberNewtonIterations  1
-	  MaxStep		  "auto"
-	  MinStep		  "0.0001"
+	  MaxStep		  "0.1"
+	  MinStep		  "auto"
 	  MaxConsecutiveMinStep	  "1"
 	  RelTol		  "1e-3"
 	  SolverMode		  "Auto"
@@ -667,8 +666,17 @@ Model {
       SaturateOnIntegerOverflow	on
     }
     Block {
-      BlockType		      Derivative
-      CoefficientInTFapproximation "inf"
+      BlockType		      Constant
+      Value		      "1"
+      VectorParams1D	      on
+      SamplingMode	      "Sample based"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "Inherit: Inherit from 'Constant value'"
+      LockScale		      off
+      SampleTime	      "inf"
+      FramePeriod	      "inf"
+      PreserveConstantTs      off
     }
     Block {
       BlockType		      Gain
@@ -748,6 +756,20 @@ Model {
       LockScale		      off
       RndMeth		      "Zero"
       SaturateOnIntegerOverflow	on
+      SampleTime	      "-1"
+    }
+    Block {
+      BlockType		      Relay
+      OnSwitchValue	      "eps"
+      OffSwitchValue	      "eps"
+      OnOutputValue	      "1"
+      OffOutputValue	      "0"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "Inherit: All ports same datatype"
+      LockScale		      off
+      InputProcessing	      "Inherited"
+      ZeroCross		      on
       SampleTime	      "-1"
     }
     Block {
@@ -834,8 +856,8 @@ Model {
     }
   }
   System {
-    Name		    "controlled_IPD_from_ISO"
-    Location		    [2, 96, 1282, 868]
+    Name		    "IS_O"
+    Location		    [-3, 50, 1277, 778]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -849,13 +871,13 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "126"
+    SIDHighWatermark	    "94"
     Block {
       BlockType		      SubSystem
       Name		      "AUV"
-      SID		      "68"
-      Ports		      [1, 5]
-      Position		      [535, 327, 635, 393]
+      SID		      "66"
+      Ports		      [2, 6]
+      Position		      [440, 365, 575, 450]
       ZOrder		      -19
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
@@ -866,7 +888,7 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"AUV"
-	Location		[0, 468, 1280, 1240]
+	Location		[65, 207, 856, 804]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -881,16 +903,25 @@ Model {
 	ZoomFactor		"100"
 	Block {
 	  BlockType		  Inport
-	  Name			  "Force/Moment"
-	  SID			  "69"
+	  Name			  "Force/Torque"
+	  SID			  "67"
 	  Position		  [60, 158, 90, 172]
 	  ZOrder		  -1
 	  IconDisplay		  "Port number"
 	}
 	Block {
+	  BlockType		  Inport
+	  Name			  "Disturbances"
+	  SID			  "68"
+	  Position		  [60, 193, 90, 207]
+	  ZOrder		  -1
+	  Port			  "2"
+	  IconDisplay		  "Port number"
+	}
+	Block {
 	  BlockType		  Abs
 	  Name			  "Abs"
-	  SID			  "72"
+	  SID			  "69"
 	  Position		  [315, 360, 345, 390]
 	  ZOrder		  -1
 	  BlockMirror		  on
@@ -898,9 +929,28 @@ Model {
 	  SaturateOnIntegerOverflow off
 	}
 	Block {
+	  BlockType		  Abs
+	  Name			  "Abs2"
+	  SID			  "70"
+	  Position		  [340, 80, 370, 110]
+	  ZOrder		  -1
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Saturate
+	  Name			  "Force/Torque limits"
+	  SID			  "71"
+	  Ports			  [1, 1]
+	  Position		  [155, 150, 185, 180]
+	  ZOrder		  -10
+	  InputPortMap		  "u0"
+	  UpperLimit		  "force_torque_limit_top"
+	  LowerLimit		  "force_torque_limit_bottom"
+	}
+	Block {
 	  BlockType		  Integrator
 	  Name			  "Integrator"
-	  SID			  "73"
+	  SID			  "72"
 	  Ports			  [1, 1]
 	  Position		  [545, 195, 575, 225]
 	  ZOrder		  -2
@@ -908,9 +958,17 @@ Model {
 	Block {
 	  BlockType		  Integrator
 	  Name			  "Integrator1"
-	  SID			  "74"
+	  SID			  "73"
 	  Ports			  [1, 1]
 	  Position		  [650, 195, 680, 225]
+	  ZOrder		  -2
+	}
+	Block {
+	  BlockType		  Integrator
+	  Name			  "Integrator2"
+	  SID			  "74"
+	  Ports			  [1, 1]
+	  Position		  [505, 30, 535, 60]
 	  ZOrder		  -2
 	}
 	Block {
@@ -929,25 +987,14 @@ Model {
 	  SaturateOnIntegerOverflow off
 	}
 	Block {
-	  BlockType		  Saturate
-	  Name			  "Saturation"
-	  SID			  "123"
-	  Ports			  [1, 1]
-	  Position		  [305, 195, 335, 225]
-	  ZOrder		  -10
-	  InputPortMap		  "u0"
-	  UpperLimit		  "28.4"
-	  LowerLimit		  "-28.4"
-	}
-	Block {
 	  BlockType		  Sum
 	  Name			  "Sum1"
-	  SID			  "79"
-	  Ports			  [3, 1]
+	  SID			  "76"
+	  Ports			  [4, 1]
 	  Position		  [250, 170, 270, 250]
 	  ZOrder		  -18
 	  ShowName		  off
-	  Inputs		  "+--"
+	  Inputs		  "++--"
 	  InputSameDT		  off
 	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
@@ -955,12 +1002,12 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "k_drag"
-	  SID			  "83"
+	  SID			  "77"
 	  Position		  [305, 319, 435, 351]
 	  ZOrder		  -8
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  Gain			  "0"
+	  Gain			  "beta_rr"
 	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
 	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
@@ -968,12 +1015,12 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "k_drag1"
-	  SID			  "84"
+	  SID			  "78"
 	  Position		  [305, 264, 435, 296]
 	  ZOrder		  -8
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  Gain			  "6.75E-4"
+	  Gain			  "beta_r"
 	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
 	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
@@ -981,10 +1028,10 @@ Model {
 	Block {
 	  BlockType		  Gain
 	  Name			  "k_inertia"
-	  SID			  "85"
+	  SID			  "79"
 	  Position		  [375, 193, 480, 227]
 	  ZOrder		  -8
-	  Gain			  "1/(4.26E-4)"
+	  Gain			  "1/(alpha)"
 	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
 	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
@@ -992,15 +1039,15 @@ Model {
 	Block {
 	  BlockType		  Outport
 	  Name			  "Position"
-	  SID			  "70"
-	  Position		  [855, 203, 885, 217]
+	  SID			  "80"
+	  Position		  [705, 203, 735, 217]
 	  ZOrder		  -2
 	  IconDisplay		  "Port number"
 	}
 	Block {
 	  BlockType		  Outport
 	  Name			  "Velocity"
-	  SID			  "92"
+	  SID			  "81"
 	  Position		  [665, 298, 695, 312]
 	  ZOrder		  -2
 	  Port			  "2"
@@ -1009,7 +1056,7 @@ Model {
 	Block {
 	  BlockType		  Outport
 	  Name			  "Acceleration"
-	  SID			  "94"
+	  SID			  "82"
 	  Position		  [530, 123, 560, 137]
 	  ZOrder		  -2
 	  Port			  "3"
@@ -1018,19 +1065,28 @@ Model {
 	Block {
 	  BlockType		  Outport
 	  Name			  "demanded forces"
-	  SID			  "121"
-	  Position		  [305, 88, 335, 102]
+	  SID			  "83"
+	  Position		  [155, 38, 185, 52]
 	  ZOrder		  -2
 	  Port			  "4"
 	  IconDisplay		  "Port number"
 	}
 	Block {
 	  BlockType		  Outport
-	  Name			  "produced forces"
-	  SID			  "124"
-	  Position		  [385, 78, 415, 92]
+	  Name			  "feasible forces"
+	  SID			  "84"
+	  Position		  [245, 38, 275, 52]
 	  ZOrder		  -2
 	  Port			  "5"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "work done"
+	  SID			  "85"
+	  Position		  [600, 38, 630, 52]
+	  ZOrder		  -2
+	  Port			  "6"
 	  IconDisplay		  "Port number"
 	}
 	Line {
@@ -1038,7 +1094,7 @@ Model {
 	  SrcPort		  1
 	  Points		  [-65, 0]
 	  DstBlock		  "Sum1"
-	  DstPort		  3
+	  DstPort		  4
 	}
 	Line {
 	  SrcBlock		  "Abs"
@@ -1064,23 +1120,15 @@ Model {
 	Line {
 	  SrcBlock		  "Sum1"
 	  SrcPort		  1
-	  Points		  [10, 0]
-	  Branch {
-	    Points		    [5, 0]
-	    DstBlock		    "demanded forces"
-	    DstPort		    1
-	  }
-	  Branch {
-	    DstBlock		    "Saturation"
-	    DstPort		    1
-	  }
+	  DstBlock		  "k_inertia"
+	  DstPort		  1
 	}
 	Line {
 	  SrcBlock		  "Multiply"
 	  SrcPort		  1
-	  Points		  [-25, 0; 0, -150]
+	  Points		  [-25, 0; 0, -140]
 	  DstBlock		  "Sum1"
-	  DstPort		  2
+	  DstPort		  3
 	}
 	Line {
 	  SrcBlock		  "k_drag"
@@ -1133,97 +1181,118 @@ Model {
 	  }
 	}
 	Line {
-	  SrcBlock		  "Force/Moment"
+	  SrcBlock		  "Integrator2"
 	  SrcPort		  1
-	  Points		  [105, 0; 0, 20]
-	  DstBlock		  "Sum1"
+	  DstBlock		  "work done"
 	  DstPort		  1
 	}
 	Line {
-	  SrcBlock		  "Saturation"
+	  SrcBlock		  "Disturbances"
 	  SrcPort		  1
-	  Points		  [10, 0]
+	  DstBlock		  "Sum1"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "Force/Torque"
+	  SrcPort		  1
+	  Points		  [25, 0]
 	  Branch {
-	    DstBlock		    "k_inertia"
+	    DstBlock		    "Force/Torque limits"
 	    DstPort		    1
 	  }
 	  Branch {
-	    Points		    [0, -125]
-	    DstBlock		    "produced forces"
+	    Points		    [0, -120]
+	    DstBlock		    "demanded forces"
 	    DstPort		    1
 	  }
 	}
+	Line {
+	  SrcBlock		  "Force/Torque limits"
+	  SrcPort		  1
+	  Points		  [20, 0]
+	  Branch {
+	    Points		    [5, 0; 0, 15]
+	    DstBlock		    "Sum1"
+	    DstPort		    1
+	  }
+	  Branch {
+	    Points		    [0, -75]
+	    Branch {
+	      Points		      [0, -45]
+	      DstBlock		      "feasible forces"
+	      DstPort		      1
+	    }
+	    Branch {
+	      Points		      [0, 5]
+	      DstBlock		      "Abs2"
+	      DstPort		      1
+	    }
+	  }
+	}
+	Line {
+	  SrcBlock		  "Abs2"
+	  SrcPort		  1
+	  Points		  [95, 0; 0, -50]
+	  DstBlock		  "Integrator2"
+	  DstPort		  1
+	}
 	Annotation {
-	  SID			  "90"
+	  SID			  "87"
 	  Position		  [624, 500]
 	}
 	Annotation {
-	  SID			  "89"
+	  SID			  "86"
 	  Position		  [248, 394]
 	}
       }
     }
     Block {
-      BlockType		      Derivative
-      Name		      "Derivative"
-      SID		      "96"
-      Position		      [290, 480, 320, 510]
-      ZOrder		      -1
-      BlockRotation	      270
+      BlockType		      ToWorkspace
+      Name		      "Forces"
+      SID		      "59"
+      Ports		      [1]
+      Position		      [650, 415, 775, 445]
+      ZOrder		      -7
+      VariableName	      "SO_achieved_forces"
+      MaxDataPoints	      "inf"
+      SampleTime	      "-1"
+      SaveFormat	      "Timeseries"
     }
     Block {
-      BlockType		      Integrator
-      Name		      "Integrator2"
-      SID		      "64"
-      Ports		      [1, 1]
-      Position		      [290, 315, 320, 345]
-      ZOrder		      -2
+      BlockType		      Relay
+      Name		      "Relay"
+      SID		      "1"
+      Position		      [295, 372, 360, 408]
+      ZOrder		      -9
+      OnSwitchValue	      "x_a"
+      OffSwitchValue	      "-1*(x_a)"
+      OnOutputValue	      "C"
+      OffOutputValue	      "-1*(C)"
+      InputProcessing	      "Elements as channels (sample based)"
     }
     Block {
-      BlockType		      Gain
-      Name		      "K_d"
-      SID		      "97"
-      Position		      [350, 422, 425, 488]
-      ZOrder		      -8
-      Gain		      "12.32"
-      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
+      BlockType		      ToWorkspace
+      Name		      "SO_Demanded_Forces/Torque"
+      SID		      "88"
+      Ports		      [1]
+      Position		      [875, 225, 1020, 255]
+      ZOrder		      -7
+      VariableName	      "SO_demanded_forces"
+      MaxDataPoints	      "inf"
+      SampleTime	      "-1"
+      SaveFormat	      "Timeseries"
     }
     Block {
-      BlockType		      Gain
-      Name		      "K_i"
-      SID		      "65"
-      Position		      [345, 312, 420, 348]
-      ZOrder		      -8
-      Gain		      "1.212E4"
-      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Gain
-      Name		      "K_p"
-      SID		      "63"
-      Position		      [215, 393, 285, 447]
-      ZOrder		      -8
-      Gain		      "-1094"
-      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Reference
-      Name		      "Repeating\nSequence"
-      SID		      "120"
-      Ports		      [0, 1]
-      Position		      [35, 360, 65, 390]
-      ZOrder		      -16
-      LibraryVersion	      "1.260"
-      SourceBlock	      "simulink/Sources/Repeating\nSequence"
-      SourceType	      "Repeating table"
-      rep_seq_t		      "[0 1 1 2 2 3 3]"
-      rep_seq_y		      "[0 0 1 1 5 5 0]"
+      BlockType		      ToWorkspace
+      Name		      "SO_Position"
+      SID		      "57"
+      Ports		      [1]
+      Position		      [990, 365, 1110, 395]
+      ZOrder		      -7
+      VariableName	      "SO_position"
+      MaxDataPoints	      "inf"
+      SampleTime	      "-1"
+      SaveFormat	      "Timeseries"
     }
     Block {
       BlockType		      Scope
@@ -1233,11 +1302,10 @@ Model {
       Position		      [980, 276, 1010, 309]
       ZOrder		      -16
       Floating		      off
-      Location		      [6, 71, 1274, 799]
-      Open		      on
+      Location		      [5, 71, 1281, 799]
+      Open		      off
       NumInputPorts	      "2"
       TickLabels	      "on"
-      ZoomMode		      "xonly"
       List {
 	ListType		AxesTitles
 	axes1			"%<SignalLabel>"
@@ -1254,154 +1322,18 @@ Model {
 	MarkerStyles		"none|none|none|none|none|none"
       }
       ShowLegends	      on
-      LegendLocations	      "0.91835     0.93612    0.059174     0.02473\n0.92466     0.44848     0.11359     0.02473"
-      YMin		      "-0.5~0.95"
-      YMax		      "5.5~1.05"
+      LegendLocations	      "0.91886     0.93474    0.058803     0.02473\n0.92199     0.44848    0.055669     0.02473"
+      YMin		      "-2e-12~-2.3205"
+      YMax		      "-1e-13~-2.0995"
       DataFormat	      "StructureWithTime"
-      MaxDataPoints	      "500000"
       SampleTime	      "1"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "Scope1"
-      SID		      "53"
-      Ports		      [1]
-      Position		      [750, 344, 780, 376]
-      ZOrder		      -16
-      Floating		      off
-      Location		      [235, 150, 559, 389]
-      Open		      off
-      NumInputPorts	      "1"
-      ZoomMode		      "xonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      List {
-	ListType		ScopeGraphics
-	FigureColor		"[0.5 0.5 0.5]"
-	AxesColor		"[0 0 0]"
-	AxesTickColor		"[1 1 1]"
-	LineColors		"[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
-	LineStyles		"-|-|-|-|-|-"
-	LineWidths		"[0.5 0.5 0.5 0.5 0.5 0.5]"
-	MarkerStyles		"none|none|none|none|none|none"
-      }
-      ShowLegends	      off
-      TimeRange		      "0.16"
-      SaveName		      "ScopeData1"
-      DataFormat	      "StructureWithTime"
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "Scope2"
-      SID		      "25"
-      Ports		      [1]
-      Position		      [840, 329, 870, 361]
-      ZOrder		      -16
-      Floating		      off
-      Location		      [5, 71, 1281, 799]
-      Open		      off
-      NumInputPorts	      "1"
-      ZoomMode		      "xonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      List {
-	ListType		ScopeGraphics
-	FigureColor		"[0.5 0.5 0.5]"
-	AxesColor		"[0 0 0]"
-	AxesTickColor		"[1 1 1]"
-	LineColors		"[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
-	LineStyles		"-|-|-|-|-|-"
-	LineWidths		"[0.5 0.5 0.5 0.5 0.5 0.5]"
-	MarkerStyles		"none|none|none|none|none|none"
-      }
-      ShowLegends	      off
-      TimeRange		      "0.16"
-      SaveName		      "ScopeData2"
-      DataFormat	      "StructureWithTime"
-      SampleTime	      "0"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "Scope3"
-      SID		      "126"
-      Ports		      [2]
-      Position		      [820, 416, 850, 449]
-      ZOrder		      -16
-      Floating		      off
-      Location		      [6, 71, 1274, 799]
-      Open		      off
-      NumInputPorts	      "2"
-      TickLabels	      "on"
-      ZoomMode		      "xonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-	axes2			"%<SignalLabel>"
-      }
-      List {
-	ListType		ScopeGraphics
-	FigureColor		"[0.501960784313725 0.501960784313725 0.501960784313725]"
-	AxesColor		"[0 0 0]"
-	AxesTickColor		"[1 1 1]"
-	LineColors		"[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
-	LineStyles		"-|-|-|-|-|-"
-	LineWidths		"[0.5 0.5 0.5 0.5 0.5 0.5]"
-	MarkerStyles		"none|none|none|none|none|none"
-      }
-      ShowLegends	      on
-      LegendLocations	      "0.91835     0.93612    0.059174     0.02473\n0.92466     0.44848     0.11359     0.02473"
-      YMin		      "-0.5~0.95"
-      YMax		      "5.5~1.05"
-      SaveName		      "ScopeData3"
-      DataFormat	      "StructureWithTime"
-      MaxDataPoints	      "500000"
-      SampleTime	      "1"
-    }
-    Block {
-      BlockType		      Scope
-      Name		      "Scope5"
-      SID		      "119"
-      Ports		      [1]
-      Position		      [585, 419, 615, 451]
-      ZOrder		      -16
-      Floating		      off
-      Location		      [5, 71, 1281, 799]
-      Open		      off
-      NumInputPorts	      "1"
-      ZoomMode		      "xonly"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      List {
-	ListType		ScopeGraphics
-	FigureColor		"[0.5 0.5 0.5]"
-	AxesColor		"[0 0 0]"
-	AxesTickColor		"[1 1 1]"
-	LineColors		"[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
-	LineStyles		"-|-|-|-|-|-"
-	LineWidths		"[0.5 0.5 0.5 0.5 0.5 0.5]"
-	MarkerStyles		"none|none|none|none|none|none"
-      }
-      ShowLegends	      off
-      TimeRange		      "0.16"
-      YMin		      "-10.15"
-      YMax		      "-9.5"
-      SaveName		      "ScopeData5"
-      DataFormat	      "StructureWithTime"
-      SampleTime	      "0"
     }
     Block {
       BlockType		      Sum
       Name		      "Sum"
       SID		      "7"
       Ports		      [2, 1]
-      Position		      [110, 363, 130, 412]
+      Position		      [250, 363, 270, 412]
       ZOrder		      -18
       ShowName		      off
       Inputs		      "+-"
@@ -1410,164 +1342,98 @@ Model {
       SaturateOnIntegerOverflow	off
     }
     Block {
-      BlockType		      Sum
-      Name		      "Sum1"
-      SID		      "95"
-      Ports		      [3, 1]
-      Position		      [460, 320, 480, 370]
-      ZOrder		      -18
-      ShowName		      off
-      Inputs		      "+--"
-      InputSameDT	      off
-      OutDataTypeStr	      "Inherit: Inherit via internal rule"
-      SaturateOnIntegerOverflow	off
+      BlockType		      Constant
+      Name		      "reference"
+      SID		      "16"
+      Position		      [135, 360, 165, 390]
+      ZOrder		      -4
+      Value		      "0"
     }
     Block {
-      BlockType		      ToWorkspace
-      Name		      "To Workspace"
-      SID		      "57"
-      Ports		      [1]
-      Position		      [990, 365, 1050, 395]
-      ZOrder		      -7
-      VariableName	      "position"
-      MaxDataPoints	      "inf"
-      SampleTime	      "-1"
-      SaveFormat	      "Timeseries"
-    }
-    Line {
-      SrcBlock		      "Repeating\nSequence"
-      SrcPort		      1
-      Points		      [20, 0]
-      Branch {
-	DstBlock		"Sum"
-	DstPort			1
-      }
-      Branch {
-	Points			[0, -75]
-	DstBlock		"Scope"
-	DstPort			2
-      }
-    }
-    Line {
-      SrcBlock		      "Integrator2"
-      SrcPort		      1
-      DstBlock		      "K_i"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "K_i"
-      SrcPort		      1
-      DstBlock		      "Sum1"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Sum1"
-      SrcPort		      1
-      Points		      [35, 0]
-      DstBlock		      "AUV"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "AUV"
-      SrcPort		      1
-      Points		      [265, 0]
-      Branch {
-	Points			[25, 0]
-	Branch {
-	  Points		  [30, 0; 0, -45]
-	  DstBlock		  "Scope"
-	  DstPort		  1
-	}
-	Branch {
-	  Points		  [0, 50]
-	  DstBlock		  "To Workspace"
-	  DstPort		  1
-	}
-      }
-      Branch {
-	Points			[5, 0; 0, 195; -465, 0]
-	Branch {
-	  Points		  [-350, 0]
-	  DstBlock		  "Sum"
-	  DstPort		  2
-	}
-	Branch {
-	  DstBlock		  "Derivative"
-	  DstPort		  1
-	}
-      }
-    }
-    Line {
-      SrcBlock		      "AUV"
-      SrcPort		      2
-      DstBlock		      "Scope2"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "AUV"
-      SrcPort		      3
-      DstBlock		      "Scope1"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "K_d"
-      SrcPort		      1
-      Points		      [15, 0; 0, -70]
-      Branch {
-	Points			[0, 50]
-	DstBlock		"Scope5"
-	DstPort			1
-      }
-      Branch {
-	DstBlock		"Sum1"
-	DstPort			3
-      }
-    }
-    Line {
-      SrcBlock		      "Derivative"
-      SrcPort		      1
-      Points		      [0, -20]
-      DstBlock		      "K_d"
-      DstPort		      1
+      BlockType		      Constant
+      Name		      "zero disturbances"
+      SID		      "92"
+      Position		      [330, 425, 360, 455]
+      ZOrder		      -4
+      Value		      "0"
     }
     Line {
       SrcBlock		      "Sum"
       SrcPort		      1
-      Points		      [65, 0]
-      Branch {
-	Points			[5, 0; 0, -60]
-	DstBlock		"Integrator2"
-	DstPort			1
-      }
-      Branch {
-	DstBlock		"K_p"
-	DstPort			1
-      }
+      DstBlock		      "Relay"
+      DstPort		      1
     }
     Line {
-      SrcBlock		      "K_p"
+      SrcBlock		      "reference"
       SrcPort		      1
-      Points		      [0, -10; 120, 0; 0, -65]
-      DstBlock		      "Sum1"
-      DstPort		      2
+      DstBlock		      "Sum"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Relay"
+      SrcPort		      1
+      Points		      [30, 0; 0, -5]
+      Branch {
+	Points			[0, 5]
+	DstBlock		"AUV"
+	DstPort			1
+      }
+      Branch {
+	Points			[0, -85; 440, 0]
+	Branch {
+	  DstBlock		  "Scope"
+	  DstPort		  2
+	}
+	Branch {
+	  Points		  [0, -60]
+	  DstBlock		  "SO_Demanded_Forces/Torque"
+	  DstPort		  1
+	}
+      }
     }
     Line {
       SrcBlock		      "AUV"
-      SrcPort		      4
-      Points		      [75, 0; 0, 50]
-      DstBlock		      "Scope3"
-      DstPort		      1
+      SrcPort		      1
+      Points		      [315, 0]
+      Branch {
+	Points			[50, 0]
+	Branch {
+	  Points		  [15, 0; 0, -85]
+	  DstBlock		  "Scope"
+	  DstPort		  1
+	}
+	Branch {
+	  Points		  [0, 10]
+	  DstBlock		  "SO_Position"
+	  DstPort		  1
+	}
+      }
+      Branch {
+	Points			[0, 110; -660, 0]
+	DstBlock		"Sum"
+	DstPort			2
+      }
     }
     Line {
       SrcBlock		      "AUV"
       SrcPort		      5
-      Points		      [65, 0; 0, 50]
-      DstBlock		      "Scope3"
+      DstBlock		      "Forces"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "zero disturbances"
+      SrcPort		      1
+      Points		      [30, 0; 0, -10]
+      DstBlock		      "AUV"
       DstPort		      2
     }
     Annotation {
       SID		      "39"
       Position		      [550, 288]
+    }
+    Annotation {
+      SID		      "56"
+      Position		      [279, 108]
     }
   }
 }

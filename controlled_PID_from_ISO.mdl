@@ -1,12 +1,12 @@
 Model {
-  Name			  "controlled_IPD_from_ISO"
+  Name			  "controlled_PID_from_ISO"
   Version		  7.9
   MdlSubVersion		  0
   GraphicalInterface {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.68"
+    ComputedModelVersion    "1.74"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "compiaffe"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Apr 11 16:22:26 2014"
-  RTWModifiedTimeStamp	  319043936
-  ModelVersionFormat	  "1.%<AutoIncrement:68>"
+  LastModifiedDate	  "Wed Apr 16 20:07:06 2014"
+  RTWModifiedTimeStamp	  319579622
+  ModelVersionFormat	  "1.%<AutoIncrement:74>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -132,7 +132,7 @@ Model {
 	  $ObjectID		  3
 	  Version		  "1.12.0"
 	  StartTime		  "0"
-	  StopTime		  "10"
+	  StopTime		  "4"
 	  AbsTol		  "auto"
 	  FixedStep		  "0.001"
 	  InitialStep		  "auto"
@@ -886,8 +886,8 @@ Model {
     }
   }
   System {
-    Name		    "controlled_IPD_from_ISO"
-    Location		    [4, 50, 1280, 778]
+    Name		    "controlled_PID_from_ISO"
+    Location		    [3, 59, 1279, 787]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -901,7 +901,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "240"
+    SIDHighWatermark	    "241"
     Block {
       BlockType		      SubSystem
       Name		      "AUV"
@@ -918,8 +918,8 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"AUV"
-	Location		[65, 119, 856, 716]
-	Open			on
+	Location		[66, 208, 857, 805]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1299,7 +1299,7 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"Controller"
-	Location		[386, 130, 1177, 727]
+	Location		[386, 240, 1186, 1012]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1353,7 +1353,7 @@ Model {
 	  SID			  "196"
 	  Position		  [220, 287, 295, 353]
 	  ZOrder		  -8
-	  Gain			  "0.052483"
+	  Gain			  "k_d"
 	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
 	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
@@ -1364,7 +1364,7 @@ Model {
 	  SID			  "197"
 	  Position		  [225, 152, 300, 188]
 	  ZOrder		  -8
-	  Gain			  "51.6312"
+	  Gain			  "k_i"
 	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
 	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
@@ -1375,7 +1375,7 @@ Model {
 	  SID			  "198"
 	  Position		  [165, 208, 235, 262]
 	  ZOrder		  -8
-	  Gain			  "-4.660439"
+	  Gain			  "k_p"
 	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
 	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
 	  SaturateOnIntegerOverflow off
@@ -1388,7 +1388,8 @@ Model {
 	  ZOrder		  -22
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
-	  Time			  "5"
+	  Time			  "step_time"
+	  After			  "controller_step_onoff"
 	  SampleTime		  "0"
 	}
 	Block {
@@ -1636,7 +1637,6 @@ Model {
 	MarkerStyles		"none|none|none|none|none|none"
       }
       ShowLegends	      on
-      LegendLocations	      "0.92071     0.93474    0.077313     0.02473\n0.91835     0.44848     0.14119     0.02473"
       YMin		      "-5e+12~-0.105"
       YMax		      "8.5e+13~-0.095"
       SaveName		      "ScopeData4"
@@ -1653,8 +1653,8 @@ Model {
       Position		      [375, 380, 405, 410]
       ZOrder		      -19
       WaveForm		      "square"
-      Amplitude		      "0.5"
-      Frequency		      "10"
+      Amplitude		      "disturb_ampl"
+      Frequency		      "disturb_freq"
     }
     Block {
       BlockType		      Scope
@@ -1702,11 +1702,10 @@ Model {
       Position		      [1035, 281, 1065, 314]
       ZOrder		      -16
       Floating		      off
-      Location		      [9, 71, 1277, 799]
+      Location		      [6, 71, 1274, 799]
       Open		      off
       NumInputPorts	      "2"
       TickLabels	      "on"
-      ZoomMode		      "yonly"
       List {
 	ListType		AxesTitles
 	axes1			"%<SignalLabel>"
@@ -1723,9 +1722,10 @@ Model {
 	MarkerStyles		"none|none|none|none|none|none"
       }
       ShowLegends	      on
-      LegendLocations	      "0.91835      0.9363    0.059174     0.02473\n0.92466     0.44866    0.068638     0.02473"
-      YMin		      "-100~-5e+12"
-      YMax		      "90~8.5e+13"
+      LegendLocations	      "0.91835     0.93474    0.059174     0.02473\n0.90888     0.44848    0.068638     0.02473"
+      TimeRange		      "10"
+      YMin		      "1~1"
+      YMax		      "1~1"
       DataFormat	      "StructureWithTime"
       LimitDataPoints	      off
       MaxDataPoints	      "500000"
@@ -1738,7 +1738,7 @@ Model {
       Ports		      [1]
       Position		      [1040, 365, 1100, 395]
       ZOrder		      -7
-      VariableName	      "position"
+      VariableName	      "PID_position"
       MaxDataPoints	      "inf"
       SampleTime	      "-1"
       SaveFormat	      "Timeseries"
@@ -1797,8 +1797,8 @@ Model {
       Ports		      [1]
       Position		      [795, 480, 855, 510]
       ZOrder		      -7
-      VariableName	      "work_done"
-      MaxDataPoints	      "inf"
+      VariableName	      "PID_work_done"
+      MaxDataPoints	      "1"
       SampleTime	      "-1"
       SaveFormat	      "Timeseries"
     }

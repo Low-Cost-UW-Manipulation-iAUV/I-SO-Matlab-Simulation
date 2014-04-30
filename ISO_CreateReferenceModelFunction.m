@@ -1,4 +1,4 @@
-function [ tf_achieved ] = ISO_CreateReferenceModelFunction( overshoot, settling_time )
+function [ tf_achieved_charac_func_match ] = ISO_CreateReferenceModelFunction( overshoot, settling_time )
 %ISO_CREATEREFERENCEMODELFUNCTION Generate a Refernce Model Function
 %   1st. gen a 2nd order response tf from overshot and settling time
 %   2nd. transform it into a 3rd order using a real pole far away
@@ -25,8 +25,7 @@ far_pole = real(p(1)) * -15;                        %Find a real pole position 1
 
 tf2 = tf([1], [1 far_pole]);                        %gen a 1st order tf with poles far away
 
-tf3a = (tf2.den{1}(2)) *tf_wanted*tf2;              %Scale the overall TF to get a unit response
-step(tf3a);
+tf3 = (tf2.den{1}(2)) *tf_wanted*tf2;              %Scale the overall TF to get a unit response
 
 
 %% 3rd format to match CLTF
@@ -34,20 +33,21 @@ step(tf3a);
 % The CLTF has K_I as the sole s^0 coefficient. This means we can find all PID coeffs
 % without incorporating the s^3 coefficient alpha... We can change this by
 % dividing everything by the s^0 coeff.:
-tf_achieved = tf3a;
-tf_achieved.num{1} = tf3a.num{1} / tf3a.den{1}(4);
-tf_achieved.den{1} = tf3a.den{1} / tf3a.den{1}(4);
-tf_achieved
+tf_achieved_charac_func_match = tf3;
+tf_achieved_charac_func_match.num{1} = tf3.num{1} / tf3.den{1}(4);
+tf_achieved_charac_func_match.den{1} = tf3.den{1} / tf3.den{1}(4);
+tf_achieved_charac_func_match
 
 %% Technically we need a zero to exactly match the CLTF.
 %However, since we are only comparing parts of the denominator to find the
 %controller coeffs it doesn't affect anything...
 
-tf4 = tf([(tf_achieved.den{1}(3)/tf_achieved.num{1}(4)) 1], [1]);
-tf_achieved_a = tf_achieved*tf4
-step(tf_achieved);
-step(tf_achieved_a)
+tf4 = tf([(tf_achieved_charac_func_match.den{1}(3)/tf_achieved_charac_func_match.num{1}(4)) 1], [1]);
+tf_achieved_full_match = tf_achieved_charac_func_match*tf4
+step(tf_achieved_charac_func_match);
+step(tf_achieved_full_match)
 
+legend show
 
 
 

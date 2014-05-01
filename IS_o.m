@@ -8,7 +8,7 @@ clc
 
 %% Relay Parameters
 x_a = 22.5;% Hysterisis width
-C = 17.09E-4;% Relay Output Amplitude
+C = 17.09E-2;% Relay Output Amplitude
 
 %% Model Parameters
 

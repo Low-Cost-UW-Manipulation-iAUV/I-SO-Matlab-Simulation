@@ -69,27 +69,27 @@ controller_step_onoff = 1;
 %When should the controller start? [s]
 step_time = 2;
 
-%How many disturbance frequencies should we test?
-disturbances_count = 15
+%How many disturbance of which frequencies should we test?
+disturbances = 1:1:15;
 
 figure(2);
-ColorSet = varycolor(disturbances_count);
+ColorSet = varycolor(length(disturbances));
 set(gca, 'ColorOrder', ColorSet);
 hold all
 
-for x = 1:disturbances_count
+for x = 1:length(disturbances)
     
     % Do we want input force disturbances? These are a square waveform with:
     disturb_ampl = 0.1; %Also the  on off switch
     
-    disturb_freq = x;
+     disturb_freq = disturbances(x);
     
     SimOut = sim('controlled_PID_from_ISO');
     
     %% Plot the system perfortmance
     [controlled_position,dump, sampling_rate] = ISO_resample(PID_position, min_delta_t);
     clear dump;
-    plot(controlled_position(:,1), controlled_position(:,2));
+    plot(controlled_position(:,1), controlled_position(:,2),'DisplayName',[ num2str(disturbances(x)) 'Hz'] );
     
     %% Calculate the overshoot and
     % Find the start position before the controller turns on

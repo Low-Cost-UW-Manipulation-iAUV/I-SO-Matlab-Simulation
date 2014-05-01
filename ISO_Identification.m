@@ -4,7 +4,7 @@ function [ ident_alpha, ident_beta_r, ident_beta_rr, omega ] = ISO_Identificatio
 
 
 % Find the output amplitude
-x_m = mean([max(SO_position_resampled) abs(min(SO_position_resampled))]);
+x_m = mean([max(SO_position_resampled.Data) abs(min(SO_position_resampled.Data))]);
 
 %Find the time step size - NOTE it is necessary to manually uniform the
 %time vector!!!

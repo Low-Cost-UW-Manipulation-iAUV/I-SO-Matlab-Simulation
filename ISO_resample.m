@@ -1,4 +1,4 @@
-function [ SO_position_resampled, SO_position_resampled_timeseries, sampling_rate ] = ISO_resample( position, min_delta )
+function [SO_position_resampled] = ISO_resample( position, min_delta )
 %ISO_RESAMPLE resamples a
 %   Detailed explanation goes here
 %% Resample the timeseries to account for variable step size
@@ -15,12 +15,12 @@ if ts_dt < min_delta
     ts_dt = min_delta;
 end
 
-sampling_rate = 1/ts_dt;
+SO_position_resampled.sampling_rate = 1/ts_dt;
 
 SO_position_resampled_timeseries = resample(position, position.Time(1):ts_dt:position.Time(length(position.Time)));
 
-SO_position_resampled(:,1) = SO_position_resampled_timeseries.Time;
-SO_position_resampled(:,2) = SO_position_resampled_timeseries.Data;
+SO_position_resampled.Time = SO_position_resampled_timeseries.Time;
+SO_position_resampled.Data = SO_position_resampled_timeseries.Data;
 
 
 

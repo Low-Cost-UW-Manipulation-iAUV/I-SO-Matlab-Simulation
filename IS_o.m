@@ -8,7 +8,7 @@ clc
 
 %% Relay Parameters
 x_a = 22.5;% Hysterisis width
-C = 17.09E-4;% Relay Output Amplitude
+C = 17.09E-2;% Relay Output Amplitude
 
 %% Model Parameters
 
@@ -17,10 +17,10 @@ force_torque_limit_top = 28.4;
 force_torque_limit_bottom = -1* force_torque_limit_top;
 
 %Inertia coefficient
-alpha = 4.26E-4;
+alpha = 5.59E-4;
 
 %Drag coefficients
-beta_r= 6.75E-4;
+beta_r= 16.77E-4;
 beta_rr= 0;
 
 
@@ -39,8 +39,7 @@ if C > force_torque_limit_top
     C = force_torque_limit_top;
 end
 
-[dump,  SO_position_resampled ]= ISO_resample(SO_position, min_delta_t); %resample the timeseries to produce a fixed delta t dataset
-clear dump;
+SO_position_resampled = ISO_resample(SO_position, min_delta_t); %resample the timeseries to produce a fixed delta t dataset
 [ident_alpha, ident_beta_r, ident_beta_rr, omega]=ISO_Identification(SO_position_resampled, C, x_a);
 
 
@@ -69,45 +68,44 @@ controller_step_onoff = 1;
 %When should the controller start? [s]
 step_time = 2;
 
-%How many disturbance frequencies should we test?
-disturbances_count = 15
+%How many disturbance of which frequencies should we test?
+disturbances = 1:1:15;
 
 figure(2);
-ColorSet = varycolor(disturbances_count);
+ColorSet = varycolor(length(disturbances));
 set(gca, 'ColorOrder', ColorSet);
 hold all
 
-for x = 1:disturbances_count
+for x = 1:length(disturbances)
     
-    % Do we want input force disturbances? These are a square waveform with:
+    % Do we want input force disturbances? These are a sine waveform with:
     disturb_ampl = 0.1; %Also the  on off switch
     
-    disturb_freq = x;
+    disturb_freq = disturbances(x);
     
     SimOut = sim('controlled_PID_from_ISO');
     
     %% Plot the system perfortmance
-    [controlled_position,dump, sampling_rate] = ISO_resample(PID_position, min_delta_t);
-    clear dump;
-    plot(controlled_position(:,1), controlled_position(:,2));
+    controlled_position(x) = ISO_resample(PID_position, min_delta_t);
+    plot(controlled_position(x).Time, controlled_position(x).Data, 'DisplayName',[ num2str(disturbances(x)) 'Hz'] );
     
     %% Calculate the overshoot and
     % Find the start position before the controller turns on
     
     y = 1;
-    while controlled_position(y,1) < step_time
+    while controlled_position(x).Time(y) < step_time
         y=y+1;
     end
     
-    %Calculate the Overshoot and Settling Time value   
+    %Calculate the Overshoot and Settling Time value
     
-    os(x) = overshoot(controlled_position(:,2), sampling_rate);
-    st(x)= settlingtime(controlled_position(y:length(controlled_position),2),sampling_rate, 1.5,'Tolerance', 5.0);
+    %overshoot(controlled_position(x).Data, controlled_position(x).sampling_rate,'Tolerance', 5.0)
+    %os(x,:) = overshoot(controlled_position(x).Data, controlled_position(x).sampling_rate,'Tolerance', 5.0);
+    
+    %st(x,:)= settlingtime(controlled_position(x).Data(y:length(controlled_position(x).Data)),controlled_position(x).sampling_rate, 1.5,'Tolerance', 5.0);
     
 end
 legend show Location NorthEastOutside
 
 % Print the overshoot and settlingtime value
-os
-st
 

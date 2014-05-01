@@ -6,11 +6,11 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.74"
+    ComputedModelVersion    "1.76"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
-  SavedCharacterEncoding  "ISO-8859-1"
+  SavedCharacterEncoding  "UTF-8"
   SaveDefaultBlockParams  on
   ScopeRefreshTime	  0.035000
   OverrideScopeRefreshTime on
@@ -27,9 +27,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "compiaffe"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Apr 16 20:07:06 2014"
-  RTWModifiedTimeStamp	  319579622
-  ModelVersionFormat	  "1.%<AutoIncrement:74>"
+  LastModifiedDate	  "Wed Apr 30 16:01:43 2014"
+  RTWModifiedTimeStamp	  320773121
+  ModelVersionFormat	  "1.%<AutoIncrement:76>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -887,7 +887,7 @@ Model {
   }
   System {
     Name		    "controlled_PID_from_ISO"
-    Location		    [3, 59, 1279, 787]
+    Location		    [51, 81, 1280, 809]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -901,7 +901,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "241"
+    SIDHighWatermark	    "242"
     Block {
       BlockType		      SubSystem
       Name		      "AUV"
@@ -1652,7 +1652,6 @@ Model {
       Ports		      [0, 1]
       Position		      [375, 380, 405, 410]
       ZOrder		      -19
-      WaveForm		      "square"
       Amplitude		      "disturb_ampl"
       Frequency		      "disturb_freq"
     }
